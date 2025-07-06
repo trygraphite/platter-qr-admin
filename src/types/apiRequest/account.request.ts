@@ -67,6 +67,7 @@ export interface ChangePasswordRequest {
 }
 
 export interface LoginRequest {
-    email: string;
+    username: string;
     password: string;
+    type: string;
 }

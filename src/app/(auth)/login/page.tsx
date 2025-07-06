@@ -8,6 +8,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { toast } from 'sonner'
+import { AxiosError } from 'axios'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -16,9 +17,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Eye, EyeOff, Mail, Lock, Loader2 } from 'lucide-react'
 import { useApi } from '@/network'
 import { useAuthStore } from '@/store/auth'
+import { setAuthToken } from '@/utils/cookies'
 
 const loginSchema = z.object({
-  email: z.string().email('Please enter a valid email address'),
+  username: z.string().email('Please enter a valid email address'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
 })
 
@@ -39,18 +41,24 @@ const Login = () => {
   })
 
   const loginMutation = useMutation({
-    mutationFn: authApi.login,
+    mutationFn: (payload: LoginFormData) => authApi.login({ ...payload, type: 'admin' }),
     onSuccess: (response) => {
-      const userData = response.data.data
-      setUser(userData)
+      const { account, authorization } = response.data.data
+      
+      // Save the authorization token in cookies
+      setAuthToken(authorization)
+      
+      // Save user data in store
+      setUser(account)
+      
       toast.success('Login successful!', {
         description: 'Welcome back!',
       })
-      router.push('/dashboard')
+      router.push('/')
     },
-    onError: (error: any) => {
+    onError: (error: AxiosError) => {
       toast.error('Login failed', {
-        description: error?.response?.data?.message || 'Please check your credentials and try again.',
+        description: (error.response?.data as { message?: string })?.message || 'Please check your credentials and try again.',
       })
     },
   })
@@ -78,11 +86,11 @@ const Login = () => {
                 type="email"
                 placeholder="Enter your email"
                 className="pl-10"
-                {...register('email')}
+                {...register('username')}
               />
             </div>
-            {errors.email && (
-              <p className="text-sm text-red-500">{errors.email.message}</p>
+            {errors.username && (
+              <p className="text-sm text-red-500">{errors.username.message}</p>
             )}
           </div>
 

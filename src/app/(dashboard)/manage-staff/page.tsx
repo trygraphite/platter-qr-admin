@@ -1,11 +1,9 @@
-import React from 'react'
+import ManageStaff from '@/components/modules/staff/manage/manage-staff'
 
-const ManageStaff = () => {
+export default function ManageStaffPage() {
   return (
-    <div>
-      
+    <div className="container mx-auto py-6">
+      <ManageStaff />
     </div>
   )
 }
-
-export default ManageStaff

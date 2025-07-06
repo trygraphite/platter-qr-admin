@@ -11,7 +11,8 @@ import {
 import {
   AccountMeResponse,
   AccountAuthorizationResponse,
-  AccountExistsResponse
+  AccountExistsResponse,
+  AccountBusinessResponse
 } from "@/types/apiResponse/account.payload";
 
 export function accountApi(axiosInstance: AxiosInstance) {
@@ -64,6 +65,11 @@ export function accountApi(axiosInstance: AxiosInstance) {
     // Change password
     changePassword(payload: ChangePasswordRequest) {
       return axiosInstance.post<any>("/account/change-password", payload);
+    },
+
+    // Get active business for account
+    getActiveBusiness() {
+      return axiosInstance.get<AccountBusinessResponse>('/account/business');
     },
   };
 }

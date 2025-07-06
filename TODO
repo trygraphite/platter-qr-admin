@@ -1,0 +1,8 @@
+implement a create account screen / onboarding screen, 
+implement view qrcode with download for menu on menu mangement page, 
+improve on ui coloring
+
+
+bugs:
+menu item must have a vareity to be created,(must have 2)
+menu item variety edit creates a new vareity

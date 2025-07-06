@@ -112,3 +112,40 @@ export interface AccountExistsResponse {
     timestamp: string;
     data: AccountExistsData;
 }
+
+export interface AccountBusinessContactEmail {
+    value: string;
+    verified: boolean;
+}
+
+export interface AccountBusinessContacts {
+    email: AccountBusinessContactEmail;
+    name: string;
+    phone: string;
+}
+
+export interface AccountBusinessHour {
+    day: string;
+    opening: string;
+    closing: string;
+}
+
+export interface AccountBusinessData {
+    _id: string;
+    name: string;
+    resolvedName: string;
+    description: string;
+    subdomain: string;
+    website: string;
+    contacts: AccountBusinessContacts;
+    hours: AccountBusinessHour[];
+    logo: string;
+    image: string;
+}
+
+export interface AccountBusinessResponse {
+    path: string;
+    message: string;
+    timestamp: string;
+    data: AccountBusinessData;
+}
