@@ -56,6 +56,7 @@ export interface MenuVariety {
   isAvailable: boolean;
   isDefault: boolean;
   price: number;
+  _id: string;
 }
 
 export interface MenuItem {

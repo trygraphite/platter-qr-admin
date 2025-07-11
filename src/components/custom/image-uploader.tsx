@@ -60,28 +60,28 @@ export const ImageUploader = ({
       <div
         {...getRootProps()}
         className={cn(
-          'w-full rounded-lg border px-5 py-4',
+          'w-full rounded-lg border-2 border-dashed border-gray-300 bg-white px-5 py-4 transition-all duration-200 hover:border-primary focus-within:border-primary hover:shadow-md cursor-pointer',
           errorMessage && 'border-red-500',
-          disabled && 'opacity-50',
+          disabled && 'opacity-50 pointer-events-none',
           className,
         )}
       >
-        <div className="flex items-center">
+        <div className="flex items-center gap-4">
           {url ? (
-            <div className={cn('relative overflow-hidden border bg-gray-100', imagePreviewClassName)}>
+            <div className={cn('relative overflow-hidden rounded-md bg-gray-100 flex items-center justify-center aspect-video w-40 h-24 shadow-sm', imagePreviewClassName)}>
               <Image src={url} fill alt="profile image" className="object-cover" />
             </div>
           ) : (
             <div
               className={cn(
-                'relative flex cursor-pointer items-center justify-center bg-gray-100',
+                'relative flex items-center justify-center aspect-video w-40 h-24 rounded-md bg-gradient-to-br from-gray-100 to-gray-200 border border-dashed border-gray-300',
                 placeholderClassName,
               )}
             >
-              <Camera size={38} className="text-muted-foreground" />
+              <Camera size={38} className="text-primary/60" />
             </div>
           )}
-          <div className="ml-3">
+          <div className="ml-3 flex flex-col gap-1">
             <div
               className={
                 type === 'profile'
@@ -104,7 +104,7 @@ export const ImageUploader = ({
           <div className="relative ml-auto">
             {type === 'upload' ? (
               <>
-                <input type="text" hidden {...getInputProps()} />
+                <input type="file" accept="image/*" hidden {...getInputProps()} />
                 {children}
               </>
             ) : (

@@ -211,4 +211,3 @@ export function MenuManagement() {
   );
 }
 
-// attach service propvier to menu item

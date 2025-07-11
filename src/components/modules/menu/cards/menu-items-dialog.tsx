@@ -8,9 +8,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Pencil, Trash2, ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useMenuCategoryItems, useUpdateMenuItem } from "@/hooks/useMenu";
@@ -31,12 +30,14 @@ interface MenuItemsDialogProps {
   isOpen: boolean;
   onClose: () => void;
   category: MenuCategory;
+  editMode: boolean;
 }
 
 export function MenuItemsDialog({
   isOpen,
   onClose,
   category,
+  editMode,
 }: MenuItemsDialogProps) {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingMenuItem, setEditingMenuItem] =
@@ -94,7 +95,7 @@ export function MenuItemsDialog({
   };
 
   const itemHasVarieties = (item: MenuItemWithVarieties) => {
-    return item.varieties && item.varieties.length > 0;
+    return item.varieties && item.varieties.length > 1;
   };
 
   const getDisplayPrice = (item: MenuItemWithVarieties) => {
@@ -219,8 +220,8 @@ export function MenuItemsDialog({
                               {/* Varieties Count and Expand Button */}
                               {hasVarieties && (
                                 <div className="flex items-center gap-2 mt-2">
-                                  <Badge variant="secondary">
-                                    {item.varieties!.length} varieties
+                                  <Badge variant="secondary" className="text-white">
+                                    {item.varieties && item.varieties.length > 1 ? item.varieties.length - 1 : 0} varieties
                                   </Badge>
                                   <Button
                                     variant="ghost"
@@ -257,33 +258,33 @@ export function MenuItemsDialog({
                                       toggleAvailability(item)
                                     }
                                   />
-                                  <Label
-                                    htmlFor={`available-dialog-${item._id}`}
-                                    className="text-sm"
-                                  >
-                                    Available
-                                  </Label>
+                                  {editMode && (
+                                    <>
+                                      <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={() =>
+                                          setEditingMenuItem(item)
+                                        }
+                                      >
+                                        <Pencil className="w-4 h-4 mr-2" />
+                                        Edit
+                                      </Button>
+                                      <Button
+                                        variant="destructive"
+                                        size="sm"
+                                        disabled
+                                        onClick={() => {
+                                          toast.info("Delete functionality coming soon!", {
+                                            description: "Menu item deletion will be available in a future update."
+                                          });
+                                        }}
+                                      >
+                                        <Trash2 className="w-4 h-4" />
+                                      </Button>
+                                    </>
+                                  )}
                                 </div>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => setEditingMenuItem(item)}
-                                >
-                                  <Pencil className="w-4 h-4 mr-2" />
-                                  Edit
-                                </Button>
-                                <Button
-                                  variant="destructive"
-                                  size="sm"
-                                  disabled
-                                  onClick={() => {
-                                    toast.info("Delete functionality coming soon!", {
-                                      description: "Menu item deletion will be available in a future update."
-                                    });
-                                  }}
-                                >
-                                  <Trash2 className="w-4 h-4" />
-                                </Button>
                               </div>
                             </div>
                           </div>
@@ -298,7 +299,7 @@ export function MenuItemsDialog({
                           Available Varieties:
                         </h4>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                          {item.varieties!.map((variety) => (
+                          {item.varieties && item.varieties.length > 1 && item.varieties.slice(1).map((variety) => (
                             <div
                               key={variety.name}
                               className={`p-3 rounded-lg border ${
@@ -373,11 +374,11 @@ export function MenuItemsDialog({
           <div className="flex justify-between mt-4">
             <Button
               onClick={() => setIsAddModalOpen(true)}
-              className="flex items-center"
+              className="flex items-center text-white"
               variant="secondary"
               size="sm"
             >
-              Add
+              Add Menu Item
             </Button>
             <Button variant="outline" onClick={onClose}>
               Close

@@ -32,6 +32,7 @@ export interface MenuVariety {
   isAvailable: boolean;
   isDefault: boolean;
   price: number;
+  // id: string;
 }
 
 export interface CreateMenuItemRequest {

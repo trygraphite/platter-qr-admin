@@ -71,7 +71,7 @@ export function CategoryCard({ category, editMode, onEdit }: CategoryCardProps) 
         </CardFooter>
       </div>
 
-      <MenuItemsDialog isOpen={isMenuItemsOpen} onClose={() => setIsMenuItemsOpen(false)} category={category} />
+      <MenuItemsDialog isOpen={isMenuItemsOpen} onClose={() => setIsMenuItemsOpen(false)} category={category} editMode={editMode} />
     </>
   )
 }

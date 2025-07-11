@@ -28,6 +28,7 @@ import { removeAuthToken } from "@/utils/cookies";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Image from "next/image";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
@@ -250,6 +251,16 @@ export function NavUser() {
             <DropdownMenuItem onClick={handleViewPlans}>
               <CreditCard className="mr-2 h-4 w-4" />
               View Plans
+            </DropdownMenuItem>
+
+            <DropdownMenuSeparator />
+
+            {/* Theme Toggle */}
+            <DropdownMenuItem asChild>
+              <div className="flex items-center justify-between w-full">
+                <span>Theme</span>
+                <ThemeToggle />
+              </div>
             </DropdownMenuItem>
 
             <DropdownMenuSeparator />

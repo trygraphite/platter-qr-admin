@@ -1,6 +1,12 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { routes } from './lib/routes'
+import { jwtDecode } from 'jwt-decode';
+
+type DecodedToken = {
+  accountType?: string;
+  [key: string]: unknown;
+};
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('auth_token')?.value
@@ -11,7 +17,7 @@ export function middleware(request: NextRequest) {
   console.log('Middleware - Token exists:', !!token)
 
   // Define auth routes that should redirect to home if user is already logged in
-  const authRoutes = ['/login', '/signup', '/forgot-password', '/reset-password']
+  const authRoutes = ['/login', '/signup', '/forgot-password', '/reset-password', '/staff-login']
   
   // Check if current path is an auth route
   const isAuthRoute = authRoutes.some(route => pathname.startsWith(route))
@@ -28,6 +34,22 @@ export function middleware(request: NextRequest) {
   if (!token && !isAuthRoute) {
     console.log('Middleware - Redirecting to login (no token, not on auth route)')
     return NextResponse.redirect(new URL(routes.login, request.url))
+  }
+
+  // Staff restriction: Only allow /orders for staff
+  if (token && pathname.startsWith('/')) {
+    try {
+      const decoded = jwtDecode(token) as DecodedToken;
+      if (decoded && decoded.accountType === 'staff') {
+        if (pathname !== '/orders' && pathname !== '/' && !isAuthRoute) {
+          // Only allow /orders and root for staff
+          return NextResponse.redirect(new URL('/orders', request.url));
+        }
+      }
+    } catch (e) {
+      // If token can't be decoded, allow request
+      console.log('Could not decode token:', e);
+    }
   }
 
   console.log('Middleware - Allowing request to continue')

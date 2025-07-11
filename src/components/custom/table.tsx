@@ -92,7 +92,7 @@ export function Table<T extends { id?: string | number; _id?: string | number; [
           </Select>
         </div>
       </div>
-      <div className="overflow-x-auto rounded-lg border bg-white">
+      <div className="overflow-x-auto rounded-lg border">
         <table className="min-w-full divide-y divide-border">
           <thead className="bg-muted">
             <tr>

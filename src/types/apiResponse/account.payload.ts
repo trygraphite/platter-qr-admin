@@ -80,6 +80,7 @@ export interface AccountMeData {
     permissions: AccountMePermission[];
     businesses: AccountMeBusiness[];
     designation: string;
+    accountType?: string;
 }
 
 export interface AccountMeResponse {
@@ -141,6 +142,16 @@ export interface AccountBusinessData {
     hours: AccountBusinessHour[];
     logo: string;
     image: string;
+    address?: {
+        address: string;
+        city: string;
+        country: string;
+        postalCode: string;
+        proofOfAddress?: string;
+        latitude?: string;
+        longitude?: string;
+    };
+    socials?: string[];
 }
 
 export interface AccountBusinessResponse {
