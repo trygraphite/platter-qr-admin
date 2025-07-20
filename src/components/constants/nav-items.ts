@@ -13,6 +13,7 @@ import {
     UserPlus2,
     UserCog2,
     BookOpenText,
+    ForkKnifeIcon,
   } from "lucide-react";
   
   export const items = [
@@ -32,18 +33,18 @@ import {
       icon: PanelTopDashed,
     },
     {
-      name: "QR Code",
-      url: "/create-qr",
+      name: "Tables",
+      url: "/create-table",
       icon: QrCode,
       children: [
         {
-          name: "Create QR Code",
-          url: "/create-qr",
+          name: "Create Table",
+          url: "/create-table",
           icon: ScanQrCode,
         },
         {
-          name: "Manage QR Code",
-          url: "/manage-qr",
+          name: "Manage Tables",
+          url: "/manage-tables",
           icon: BookHeadphones,
         },
       ],
@@ -61,6 +62,23 @@ import {
         {
           name: "Manage Staff",
           url: "/manage-staff",
+          icon: UserCog2,
+        },
+      ],
+    },
+    {
+      name: "Service Point",
+      // url: "/create-staff",
+      icon: ForkKnifeIcon,
+      children: [
+        {
+          name: "Create Service Point",
+          url: "/create-sp",
+          icon: UserPlus2,
+        },
+        {
+          name: "Manage Service Point",
+          url: "/manage-sp",
           icon: UserCog2,
         },
       ],
@@ -93,9 +111,20 @@ import {
       ],
     },
     {
-      name: "Settings",
-      url: "/settings",
+      name: "Account",
       icon: SettingsIcon,
+      children: [
+        {
+          name: "Businesses",
+          url: "/businesses",
+          icon: LayoutPanelTop,
+        },
+        {
+          name: "Settings",
+          url: "/settings",
+          icon: SettingsIcon,
+        },
+      ],
     },
   ];
   

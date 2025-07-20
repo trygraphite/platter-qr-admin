@@ -13,7 +13,7 @@ function createAxiosInstance(baseURL: string): AxiosInstance {
 
   instance.interceptors.request.use(
     (axConfig) => {
-      const token = Cookies.get('access_token')
+      const token = Cookies.get('auth_token')
       axConfig.headers.Authorization = `Bearer ${token}`
       return axConfig
     },
@@ -29,7 +29,7 @@ function createAxiosInstance(baseURL: string): AxiosInstance {
           return response
         }
 
-        window.location.assign('/logout')
+        window.location.assign(routes.login)
       }
 
       return response
@@ -37,7 +37,7 @@ function createAxiosInstance(baseURL: string): AxiosInstance {
     function (error: AxiosError<ApiErrorResponseType>) {
       if (error?.response?.status === 401) {
         if (window.location.pathname !== routes.login) {
-          window.location.assign('/logout')
+          window.location.assign(routes.login)
         }
       }
 

@@ -80,6 +80,7 @@ export interface AccountMeData {
     permissions: AccountMePermission[];
     businesses: AccountMeBusiness[];
     designation: string;
+    accountType?: string;
 }
 
 export interface AccountMeResponse {
@@ -111,4 +112,51 @@ export interface AccountExistsResponse {
     message: string;
     timestamp: string;
     data: AccountExistsData;
+}
+
+export interface AccountBusinessContactEmail {
+    value: string;
+    verified: boolean;
+}
+
+export interface AccountBusinessContacts {
+    email: AccountBusinessContactEmail;
+    name: string;
+    phone: string;
+}
+
+export interface AccountBusinessHour {
+    day: string;
+    opening: string;
+    closing: string;
+}
+
+export interface AccountBusinessData {
+    _id: string;
+    name: string;
+    resolvedName: string;
+    description: string;
+    subdomain: string;
+    website: string;
+    contacts: AccountBusinessContacts;
+    hours: AccountBusinessHour[];
+    logo: string;
+    image: string;
+    address?: {
+        address: string;
+        city: string;
+        country: string;
+        postalCode: string;
+        proofOfAddress?: string;
+        latitude?: string;
+        longitude?: string;
+    };
+    socials?: string[];
+}
+
+export interface AccountBusinessResponse {
+    path: string;
+    message: string;
+    timestamp: string;
+    data: AccountBusinessData;
 }

@@ -51,15 +51,15 @@ const Signup = () => {
     mutationFn: accountApi.createAccount,
     onSuccess: (response) => {
       const userData = response.data.data
-      setUser(userData)
+      setUser({ ...userData, accountType: userData.accountType ?? '' })
       toast.success('Account created successfully!', {
         description: 'Welcome to Platter QR!',
       })
       router.push('/dashboard')
     },
-    onError: (error: any) => {
+    onError: (error: import('axios').AxiosError) => {
       toast.error('Signup failed', {
-        description: error?.response?.data?.message || 'Please check your information and try again.',
+        description: (error.response?.data as { message?: string })?.message || 'Please check your information and try again.',
       })
     },
   })

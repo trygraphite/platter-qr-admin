@@ -12,6 +12,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { items } from "../constants/nav-items";
+import { useAccountDetails } from '@/hooks/useAccount';
 
 interface NavItem {
   name: string;
@@ -23,12 +24,34 @@ interface NavItem {
 export function NavMain() {
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const { data: accountData, isLoading, error } = useAccountDetails();
+  const user = accountData?.data;
+
+  if (isLoading) {
+    return (
+      <SidebarGroup>
+        <SidebarGroupLabel>Application</SidebarGroupLabel>
+        <SidebarMenu>
+          <SidebarMenuButton disabled>Loading...</SidebarMenuButton>
+        </SidebarMenu>
+      </SidebarGroup>
+    );
+  }
+
+  if (error || !user) {
+    return null;
+  }
+
+  // If staff, only show Orders
+  const filteredItems = user.accountType === 'staff'
+    ? items.filter((item) => item.name === 'Orders')
+    : items;
 
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Application</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item: NavItem) => (
+        {filteredItems.map((item: NavItem) => (
           <div key={item.name}>
             {/* Main Navigation Item */}
             <SidebarMenuButton
