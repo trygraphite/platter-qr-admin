@@ -23,11 +23,9 @@ const useUserLoggedIn = () => {
   useEffect(() => {
     if (data) {
       const userData = data.data.data
-
-      setUser(userData)
-      }
-    },
-   [data])
+      setUser({ ...userData, accountType: userData.accountType ?? '' })
+    }
+  }, [data, setUser])
 
   useEffect(() => {
     if (error) {

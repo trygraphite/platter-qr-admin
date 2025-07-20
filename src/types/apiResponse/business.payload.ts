@@ -20,26 +20,16 @@ export interface BusinessTable {
   _id: string;
   name: string;
   link: string;
-  business: {
-    _id: string;
-    name: string;
-    logo: string;
-    image: string;
-  };
-  createdBy: {
-    _id: string;
-    firstName: string;
-    lastName: string;
-    email: {
-      value: string;
-    };
-  };
+  business: any;
+  createdBy: any;
+  [key: string]: unknown;
 }
 
 export interface ServicePoint {
   _id: string;
   name: string;
   description: string;
+  [key: string]: unknown;
 }
 
 export interface BusinessTableListResponse {

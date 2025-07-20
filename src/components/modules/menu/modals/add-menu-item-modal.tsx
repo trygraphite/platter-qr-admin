@@ -190,7 +190,7 @@ export function AddMenuItemModal({
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <Label htmlFor="name">Item Name</Label>
+            <Label htmlFor="name" className="mb-2">Item Name</Label>
             <Input
               id="name"
               value={name}
@@ -199,7 +199,7 @@ export function AddMenuItemModal({
             />
           </div>
           <div>
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description" className="mb-2">Description</Label>
             <Textarea
               id="description"
               value={description}
@@ -207,7 +207,7 @@ export function AddMenuItemModal({
             />
           </div>
           <div>
-            <Label htmlFor="price">Base Price</Label>
+            <Label htmlFor="price" className="mb-2">Base Price</Label>
             <Input
               id="price"
               type="number"
@@ -218,7 +218,7 @@ export function AddMenuItemModal({
             />
           </div>
           <div>
-            <Label htmlFor="servicePoint">Service Point</Label>
+            <Label htmlFor="servicePoint" className="mb-2">Service Point</Label>
             <Select
               value={selectedServicePoint}
               onValueChange={setSelectedServicePoint}
@@ -247,7 +247,7 @@ export function AddMenuItemModal({
             </Select>
           </div>
           <div>
-            <Label htmlFor="image">Image</Label>
+            <Label className="mb-2" htmlFor="image">Image</Label>
             <ImageUploader
               title="Upload Image"
               caption="16:9 landscape format recommended"
@@ -305,7 +305,7 @@ export function AddMenuItemModal({
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <div>
-                        <Label htmlFor={`variety-name-${index}`}>Name</Label>
+                        <Label htmlFor={`variety-name-${index}`} className="mb-2">Name</Label>
                         <Input
                           id={`variety-name-${index}`}
                           value={variety.name}
@@ -317,7 +317,7 @@ export function AddMenuItemModal({
                         />
                       </div>
                       <div>
-                        <Label htmlFor={`variety-price-${index}`}>Price</Label>
+                        <Label htmlFor={`variety-price-${index}`} className="mb-2">Price</Label>
                         <Input
                           id={`variety-price-${index}`}
                           type="number"
@@ -334,7 +334,7 @@ export function AddMenuItemModal({
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       
                       <div>
-                        <Label htmlFor={`variety-options-${index}`}>
+                        <Label htmlFor={`variety-options-${index}`} className="mb-2">
                           Options (comma-separated)
                         </Label>
                         <Input

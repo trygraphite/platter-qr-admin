@@ -169,7 +169,7 @@ export function MenuItemsDialog({
                   <div
                     key={item._id}
                     className={`border rounded-lg ${
-                      !item.isAvailable ? "bg-gray-50" : "bg-white"
+                      !item.isAvailable ? "bg-gray-50" : "bg-seconday"
                     }`}
                   >
                     {!item.isAvailable && (
@@ -220,11 +220,11 @@ export function MenuItemsDialog({
                               {/* Varieties Count and Expand Button */}
                               {hasVarieties && (
                                 <div className="flex items-center gap-2 mt-2">
-                                  <Badge variant="secondary" className="text-white">
+                                  <Badge variant="outline" className="">
                                     {item.varieties && item.varieties.length > 1 ? item.varieties.length - 1 : 0} varieties
                                   </Badge>
                                   <Button
-                                    variant="ghost"
+                                    variant="default"
                                     size="sm"
                                     onClick={() =>
                                       toggleItemExpansion(item._id)
@@ -294,7 +294,7 @@ export function MenuItemsDialog({
 
                     {/* Expanded Varieties View */}
                     {expandedItems.has(item._id) && hasVarieties && (
-                      <div className="border-t bg-gray-50 p-4">
+                      <div className="border-t  p-4">
                         <h4 className="font-medium mb-3 text-gray-700">
                           Available Varieties:
                         </h4>
@@ -304,8 +304,8 @@ export function MenuItemsDialog({
                               key={variety.name}
                               className={`p-3 rounded-lg border ${
                                 variety.isAvailable
-                                  ? "bg-white border-gray-200"
-                                  : "bg-gray-100 border-gray-300"
+                                  ? " border-gray-200"
+                                  : " border-gray-300"
                               }`}
                             >
                               <div className="flex items-start justify-between">

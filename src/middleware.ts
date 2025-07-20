@@ -41,8 +41,12 @@ export function middleware(request: NextRequest) {
     try {
       const decoded = jwtDecode(token) as DecodedToken;
       if (decoded && decoded.accountType === 'staff') {
-        if (pathname !== '/orders' && pathname !== '/' && !isAuthRoute) {
-          // Only allow /orders and root for staff
+        // Allow only /orders, /, and auth routes
+        if (
+          pathname !== '/orders' &&
+          pathname !== '/' &&
+          !isAuthRoute
+        ) {
           return NextResponse.redirect(new URL('/orders', request.url));
         }
       }

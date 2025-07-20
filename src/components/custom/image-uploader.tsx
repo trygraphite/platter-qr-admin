@@ -60,7 +60,7 @@ export const ImageUploader = ({
       <div
         {...getRootProps()}
         className={cn(
-          'w-full rounded-lg border-2 border-dashed border-gray-300 bg-white px-5 py-4 transition-all duration-200 hover:border-primary focus-within:border-primary hover:shadow-md cursor-pointer',
+          'w-full rounded-lg border-2 border-dashed border-gray-300 bg-seconday px-5 py-4 transition-all duration-200 hover:border-primary focus-within:border-primary hover:shadow-md cursor-pointer',
           errorMessage && 'border-red-500',
           disabled && 'opacity-50 pointer-events-none',
           className,
@@ -85,7 +85,7 @@ export const ImageUploader = ({
             <div
               className={
                 type === 'profile'
-                  ? 'text-sm font-semibold text-black'
+                  ? 'text-sm font-semibold '
                   : 'text-xs font-medium text-muted-foreground'
               }
             >
@@ -94,7 +94,7 @@ export const ImageUploader = ({
             <div
               className={
                 type === 'view' || type === 'upload'
-                  ? 'text-sm font-semibold text-black'
+                  ? 'text-sm font-semibold '
                   : 'text-sm font-medium text-muted-foreground'
               }
             >

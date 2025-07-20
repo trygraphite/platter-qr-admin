@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useMutation, useQuery } from '@tanstack/react-query'
@@ -25,7 +25,7 @@ const businessSchema = z.object({
   description: z.string().min(1, 'Description is required'),
   subdomain: z.string().min(1, 'Subdomain is required'),
   website: z.string().url('Please enter a valid website URL').optional().or(z.literal('')),
-  socials: z.array(z.string()).default([]),
+  socials: z.array(z.string()),
   address: z.object({
     address: z.string().min(1, 'Address is required'),
     city: z.string().min(1, 'City is required'),
@@ -44,7 +44,7 @@ const businessSchema = z.object({
     day: z.string(),
     opening: z.string(),
     closing: z.string(),
-  })).default([]),
+  })),
 })
 
 type BusinessFormData = z.infer<typeof businessSchema>
@@ -107,7 +107,7 @@ const SettingTemplate = () => {
         description: b.description || '',
         subdomain: b.subdomain || '',
         website: b.website || '',
-        socials: [],
+        socials: b.socials || [],
         address: {
           address: b.address?.address || '',
           city: b.address?.city || '',
@@ -141,7 +141,7 @@ const SettingTemplate = () => {
     },
   })
 
-  const onSubmit = async (data: BusinessFormData) => {
+  const onSubmit: SubmitHandler<BusinessFormData> = async (data) => {
     try {
       const payload: BusinessFormData = { ...data }
       // Upload logo if it's a File

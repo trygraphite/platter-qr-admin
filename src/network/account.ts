@@ -14,6 +14,7 @@ import {
   AccountExistsResponse,
   AccountBusinessResponse
 } from "@/types/apiResponse/account.payload";
+import { AxiosResponse } from "axios";
 
 export function accountApi(axiosInstance: AxiosInstance) {
   return {
@@ -24,7 +25,7 @@ export function accountApi(axiosInstance: AxiosInstance) {
 
     // Create business
     createBusiness(payload: CreateBusinessRequest) {
-      return axiosInstance.post<any>("/account/business", payload);
+      return axiosInstance.post<AccountBusinessResponse>("/account/business", payload);
     },
 
     // Update profile information
@@ -44,7 +45,7 @@ export function accountApi(axiosInstance: AxiosInstance) {
 
     // Forgot password
     forgotPassword(payload: ForgotPasswordRequest) {
-      return axiosInstance.post<any>("/account/forgot-password", payload);
+      return axiosInstance.post<AxiosResponse<{ message: string }>>("/account/forgot-password", payload);
     },
 
     // Check if account exists
@@ -54,17 +55,17 @@ export function accountApi(axiosInstance: AxiosInstance) {
 
     // Reset password
     resetPassword(payload: ResetPasswordRequest) {
-      return axiosInstance.post<any>("/account/reset-password", payload);
+      return axiosInstance.post<AxiosResponse<{ message: string }>>("/account/reset-password", payload);
     },
 
     // Verify OTP
     verifyOtp(payload: VerifyOtpRequest) {
-      return axiosInstance.post<any>("/account/verify-otp", payload);
+      return axiosInstance.post<AxiosResponse<{ message: string }>>("/account/verify-otp", payload);
     },
 
     // Change password
     changePassword(payload: ChangePasswordRequest) {
-      return axiosInstance.post<any>("/account/change-password", payload);
+      return axiosInstance.post<AxiosResponse<{ message: string }>>("/account/change-password", payload);
     },
 
     // Get active business for account

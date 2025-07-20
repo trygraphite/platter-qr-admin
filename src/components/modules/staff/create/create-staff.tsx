@@ -4,7 +4,6 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { Info, UserPlus } from 'lucide-react'
 
@@ -13,9 +12,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { QUERY_KEYS } from '@/keys/query-keys'
 import { useCreateStaff } from '@/hooks/useStaff'
-import { CreateStaffRequest } from '@/types/apiRequest/staff.request'
 
 const staffSchema = z.object({
   firstName: z.string().min(1, 'First name is required'),
@@ -29,8 +26,8 @@ const staffSchema = z.object({
 type StaffFormData = z.infer<typeof staffSchema>
 
 const CreateStaff = () => {
-  const queryClient = useQueryClient()
-  const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm<StaffFormData>({
+  // const queryClient = useQueryClient()
+  const { register, handleSubmit, formState: { errors }, reset, setValue } = useForm<StaffFormData>({
     resolver: zodResolver(staffSchema),
     defaultValues: {
       firstName: '',
@@ -49,6 +46,7 @@ const CreateStaff = () => {
       await mutation.mutateAsync(data)
       toast.success('Staff member created successfully!')
       reset()
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       toast.error('Failed to create staff member')
     }

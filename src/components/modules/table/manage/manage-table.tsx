@@ -13,12 +13,12 @@ import { QUERY_KEYS } from '@/keys/query-keys'
 import { BusinessTable } from '@/types/apiResponse/business.payload'
 import { generateQRCode, generateTableQRUrl } from '@/utils/qr-code'
 import { QRDisplay } from '@/components/custom/qr-display'
-import { useAccountDetails } from '@/hooks/useAccount'
+import { useActiveBusiness } from '@/hooks/useAccount'
 
 const ManageTable = () => {
   const { businessApi } = useApi()
-  const { data: accountData } = useAccountDetails()
-  const primaryBusiness = accountData?.data?.businesses?.find(b => b.isPrimary)
+  const { data: accountData } = useActiveBusiness()
+  const primaryBusiness = accountData?.data
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -28,6 +28,7 @@ const ManageTable = () => {
   const [selectedTable, setSelectedTable] = useState<BusinessTable | null>(null)
   const [qrCodeUrl, setQrCodeUrl] = useState<string>('')
 
+  console.log("PRIMATRY BUSS",primaryBusiness)
   const { data: tablesData, isLoading, error, refetch } = useQuery({
     queryKey: [QUERY_KEYS.GET_ALL_BUSINESS_TABLES],
     queryFn: async () => {
@@ -41,14 +42,6 @@ const ManageTable = () => {
   const tables = tablesData?.data?.docs || []
   const totalItems = tablesData?.data?.totalItems || 0
 
-  // Debug logging
-  console.log('tablesData:', tablesData)
-  console.log('tables:', tables)
-  console.log('totalItems:', totalItems)
-  console.log('isLoading:', isLoading)
-  console.log('error:', error)
-  console.log('accountData:', accountData)
-  console.log('primaryBusiness:', primaryBusiness)
 
   const handleSearch = (value: string) => {
     setSearchTerm(value)
@@ -96,14 +89,19 @@ const ManageTable = () => {
     try {
       setSelectedTable(table)
       
+      // Generate unique table link: tableID-tableName (kebab-case)
+      const kebabName = table.name.toLowerCase().replace(/\s+/g, '-');
+      const uniqueTableLink = `${table._id}-${kebabName}`;
+
       // Generate QR code URL
       const tableUrl = generateTableQRUrl(
-        primaryBusiness?.name?.toLowerCase().replace(/\s+/g, '-') || 'the-sauce',
-        process.env.NEXT_PUBLIC_BASE_DOMAIN || 'platter.picatech.co',
-        table.link
+        primaryBusiness?.subdomain?.toLowerCase().replace(/\s+/g, '-') || '',
+        process.env.NEXT_PUBLIC_BASE_DOMAIN || '',
+        uniqueTableLink
       )
-      
+        console.log("TABLE URL",tableUrl)
       const qrCodeDataUrl = await generateQRCode(tableUrl)
+
       setQrCodeUrl(qrCodeDataUrl)
       setShowQRCode(true)
     } catch (error) {

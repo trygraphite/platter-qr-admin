@@ -62,9 +62,9 @@ const ManageServicePoint = () => {
   return (
     <div className="max-w-4xl mx-auto py-8">
       <h1 className="text-2xl font-bold mb-4">Manage Service Points</h1>
-      <Table
-        columns={columns}
-        data={servicePoints}
+      <Table<ServicePoint>
+        columns={columns as TableColumn<ServicePoint>[]}
+        data={servicePoints as unknown as ServicePoint[]}
         loading={isLoading}
         page={data?.data?.data?.currentPage || 1}
         pageSize={data?.data?.data?.itemsPerPage || 10}
