@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { useApi } from "@/network";
 import { toast } from "sonner";
 import type { AccountMeBusiness } from "@/types/apiResponse/account.payload";
+import Image from "next/image";
 
 export default function BusinessesPageTemplate() {
   const { accountApi, authApi } = useApi();
@@ -64,10 +65,12 @@ export default function BusinessesPageTemplate() {
               className="border rounded-lg p-6 flex flex-col items-center cursor-pointer hover:shadow-lg transition"
               onClick={() => handleBusinessClick(business)}
             >
-              <img
+              <Image
                 src={business.logo || business.image || "/vercel.svg"}
                 alt={business.name}
-                className="w-20 h-20 object-cover rounded-full mb-4"
+                className=" object-cover rounded-full mb-4"
+                width={60}
+                height={60}
               />
               <h2 className="text-xl font-semibold mb-2">{business.name}</h2>
               {business.isPrimary && (

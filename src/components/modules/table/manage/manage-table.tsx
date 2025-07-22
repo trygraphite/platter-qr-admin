@@ -30,12 +30,18 @@ const ManageTable = () => {
 
   console.log("PRIMATRY BUSS",primaryBusiness)
   const { data: tablesData, isLoading, error, refetch } = useQuery({
-    queryKey: [QUERY_KEYS.GET_ALL_BUSINESS_TABLES],
+    queryKey: [
+      QUERY_KEYS.GET_ALL_BUSINESS_TABLES,
+      { searchTerm, currentPage, pageSize, sortKey, sortDirection }
+    ],
     queryFn: async () => {
-      console.log('Making API call...')
-      const response = await businessApi.getAllTables()
-      console.log('API response:', response)
-      return response.data
+      const response = await businessApi.getAllTables({
+        search: searchTerm,
+        page: currentPage,
+        limit: pageSize,
+        sort: sortKey ? `${sortDirection === 'desc' ? '-' : ''}${sortKey}` : undefined,
+      });
+      return response.data;
     },
   })
 

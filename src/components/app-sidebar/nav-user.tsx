@@ -42,7 +42,6 @@ export function NavUser() {
   const {
     data: businessData,
     isLoading: businessLoading,
-    error: businessError,
   } = useActiveBusiness();
 
   // Extract user data from the API response
@@ -131,7 +130,7 @@ export function NavUser() {
   }
 
   // Show error state
-  if (accountError || businessError || !userData || !businessInfo) {
+  if (accountError || !userData) {
     return (
       <SidebarMenu>
         <SidebarMenuItem>
@@ -153,9 +152,9 @@ export function NavUser() {
   const fullName = `${userData.firstName} ${userData.lastName}`;
   const userEmail = userData.email?.value || "";
   const userInitials = getInitials(userData.firstName, userData.lastName);
-  const businessName = businessInfo.name;
-  const businessLogo = businessInfo.logo;
-  const businessInitials = getBusinessInitials(businessName);
+  const businessName = businessInfo?.name;
+  const businessLogo = businessInfo?.logo;
+  const businessInitials = businessName ? getBusinessInitials(businessName) : undefined;
 
   return (
     <SidebarMenu>
@@ -167,20 +166,23 @@ export function NavUser() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="size-8 rounded-[4px]">
-                <Image
-                  src={businessLogo || userInitials}
-                  alt={fullName}
-                  className="rounded-[4px]"
-                  width={40}
-                  height={40}
-                />
-                <AvatarFallback className="rounded-[4px]">
-                  {userInitials}
-                </AvatarFallback>
+                {businessLogo ? (
+                  <Image
+                    src={businessLogo || ""}
+                    alt={businessName || fullName}
+                    className="rounded-[4px]"
+                    width={40}
+                    height={40}
+                  />
+                ) : (
+                  <AvatarFallback className="rounded-[4px]">
+                    {userInitials}
+                  </AvatarFallback>
+                )}
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{fullName}</span>
-                <span className="truncate text-xs">{businessName}</span>
+                {businessName && <span className="truncate text-xs">{businessName}</span>}
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -194,15 +196,18 @@ export function NavUser() {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <Image
-                    src={businessLogo || ""}
-                    width={40}
-                    height={40}
-                    alt={fullName}
-                  />
-                  <AvatarFallback className="rounded-lg">
-                    {userInitials}
-                  </AvatarFallback>
+                  {businessLogo ? (
+                    <Image
+                      src={businessLogo || ""}
+                      width={40}
+                      height={40}
+                      alt={businessName || fullName}
+                    />
+                  ) : (
+                    <AvatarFallback className="rounded-lg">
+                      {userInitials}
+                    </AvatarFallback>
+                  )}
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{fullName}</span>
@@ -213,27 +218,32 @@ export function NavUser() {
             <DropdownMenuSeparator />
 
             {/* Business Section */}
-            <DropdownMenuItem disabled className="opacity-60">
-              <div className="flex items-center gap-2 w-full">
-                <Avatar className="h-6 w-6 rounded">
-                  <Image
-                    src={businessLogo || ""}
-                    alt={businessName}
-                    width={40}
-                    height={40}
-                  />
-                  <AvatarFallback className="rounded text-xs">
-                    {businessInitials}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="grid flex-1 text-left text-xs leading-tight">
-                  <span className="truncate font-medium">{businessName}</span>
-                  <span className="truncate text-xs text-muted-foreground">
-                    Active Business
-                  </span>
+            {businessName && (
+              <DropdownMenuItem disabled className="opacity-60">
+                <div className="flex items-center gap-2 w-full">
+                  <Avatar className="h-6 w-6 rounded">
+                    {businessLogo ? (
+                      <Image
+                        src={businessLogo || ""}
+                        alt={businessName}
+                        width={40}
+                        height={40}
+                      />
+                    ) : (
+                      <AvatarFallback className="rounded text-xs">
+                        {businessInitials}
+                      </AvatarFallback>
+                    )}
+                  </Avatar>
+                  <div className="grid flex-1 text-left text-xs leading-tight">
+                    <span className="truncate font-medium">{businessName}</span>
+                    <span className="truncate text-xs text-muted-foreground">
+                      Active Business
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </DropdownMenuItem>
+              </DropdownMenuItem>
+            )}
 
             <DropdownMenuSeparator />
 
@@ -243,12 +253,12 @@ export function NavUser() {
               Profile Settings
             </DropdownMenuItem>
 
-            <DropdownMenuItem onClick={handleSwitchBusiness}>
+            <DropdownMenuItem onClick={handleSwitchBusiness} disabled={!businessName}>
               <Building2 className="mr-2 h-4 w-4" />
               Switch Business
             </DropdownMenuItem>
 
-            <DropdownMenuItem onClick={handleViewPlans}>
+            <DropdownMenuItem onClick={handleViewPlans} disabled={!businessName}>
               <CreditCard className="mr-2 h-4 w-4" />
               View Plans
             </DropdownMenuItem>

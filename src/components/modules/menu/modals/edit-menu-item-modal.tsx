@@ -60,22 +60,31 @@ export function EditMenuItemModal({
   const [description, setDescription] = useState(menuItem.description || "");
   const [price, setPrice] = useState(menuItem.price.toString());
   const [isAvailable, setIsAvailable] = useState(menuItem.isAvailable);
-  const [imagePreview, setImagePreview] = useState<string | null>(
-    menuItem.image || null
-  );
-  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>(
-    menuItem.image || ""
-  );
+  const [imagePreview, setImagePreview] = useState<string | null>(menuItem.image || null);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>(menuItem.image || "");
   const [varieties, setVarieties] = useState<MenuItemVariety[]>([]);
-  const [selectedServicePoint, setSelectedServicePoint] = useState<string>(
-    menuItem.servicePoint || ""
-  );
+  const [selectedServicePoint, setSelectedServicePoint] = useState<string>("");
 
   const { uploadApi } = useApi();
   const updateMenuItemMutation = useUpdateMenuItem();
   const { data: servicePointsData, isLoading: servicePointsLoading } =
     useServicePoints();
   const servicePoints = servicePointsData?.data?.docs || [];
+
+  // Prefill service point when modal opens or menuItem changes
+  useEffect(() => {
+    if (!isOpen) return;
+    if (
+      menuItem.servicePoint &&
+      servicePoints.some((sp) => sp._id === menuItem.servicePoint)
+    ) {
+      setSelectedServicePoint(menuItem.servicePoint);
+    } else if (servicePoints.length > 0) {
+      setSelectedServicePoint(servicePoints[0]._id); // fallback to first
+    } else {
+      setSelectedServicePoint("");
+    }
+  }, [menuItem.servicePoint, isOpen, servicePoints]);
 
   // Initialize varieties from menuItem
   useEffect(() => {

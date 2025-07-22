@@ -219,6 +219,7 @@ const SettingTemplate = () => {
                   id="name"
                   {...register('name')}
                   placeholder="Enter business name"
+                  className="placeholder:opacity-60"
                 />
                 {errors.name && (
                   <p className="text-sm text-red-500">{errors.name.message}</p>
@@ -231,6 +232,7 @@ const SettingTemplate = () => {
                   id="subdomain"
                   {...register('subdomain')}
                   placeholder="your-business"
+                  className="placeholder:opacity-60"
                 />
                 {errors.subdomain && (
                   <p className="text-sm text-red-500">{errors.subdomain.message}</p>
@@ -244,6 +246,7 @@ const SettingTemplate = () => {
                 id="description"
                 {...register('description')}
                 placeholder="Describe your business"
+                className="placeholder:opacity-60"
                 rows={3}
               />
               {errors.description && (
@@ -257,6 +260,7 @@ const SettingTemplate = () => {
                 id="website"
                 {...register('website')}
                 placeholder="https://your-website.com"
+                className="placeholder:opacity-60"
               />
               {errors.website && (
                 <p className="text-sm text-red-500">{errors.website.message}</p>
@@ -315,6 +319,7 @@ const SettingTemplate = () => {
                   id="contactName"
                   {...register('contactName')}
                   placeholder="Enter contact name"
+                  className="placeholder:opacity-60"
                 />
                 {errors.contactName && (
                   <p className="text-sm text-red-500">{errors.contactName.message}</p>
@@ -328,6 +333,7 @@ const SettingTemplate = () => {
                   type="email"
                   {...register('contactEmail')}
                   placeholder="contact@business.com"
+                  className="placeholder:opacity-60"
                 />
                 {errors.contactEmail && (
                   <p className="text-sm text-red-500">{errors.contactEmail.message}</p>
@@ -341,6 +347,7 @@ const SettingTemplate = () => {
                 id="contactPhone"
                 {...register('contactPhone')}
                 placeholder="+1234567890"
+                className="placeholder:opacity-60"
               />
               {errors.contactPhone && (
                 <p className="text-sm text-red-500">{errors.contactPhone.message}</p>
@@ -364,6 +371,7 @@ const SettingTemplate = () => {
                 id="address"
                 {...register('address.address')}
                 placeholder="Enter street address"
+                className="placeholder:opacity-60"
               />
               {errors.address?.address && (
                 <p className="text-sm text-red-500">{errors.address.address.message}</p>
@@ -377,6 +385,7 @@ const SettingTemplate = () => {
                   id="city"
                   {...register('address.city')}
                   placeholder="Enter city"
+                  className="placeholder:opacity-60"
                 />
                 {errors.address?.city && (
                   <p className="text-sm text-red-500">{errors.address.city.message}</p>
@@ -389,6 +398,7 @@ const SettingTemplate = () => {
                   id="country"
                   {...register('address.country')}
                   placeholder="Enter country"
+                  className="placeholder:opacity-60"
                 />
                 {errors.address?.country && (
                   <p className="text-sm text-red-500">{errors.address.country.message}</p>
@@ -401,6 +411,7 @@ const SettingTemplate = () => {
                   id="postalCode"
                   {...register('address.postalCode')}
                   placeholder="Enter postal code"
+                  className="placeholder:opacity-60"
                 />
                 {errors.address?.postalCode && (
                   <p className="text-sm text-red-500">{errors.address.postalCode.message}</p>
@@ -419,6 +430,15 @@ const SettingTemplate = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={addBusinessHour}
+              className="w-full"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Add Business Hour
+            </Button>
             {watch('hours').map((hour, index) => (
               <div key={index} className="flex items-center gap-4 p-4 border rounded-lg">
                 <Select
@@ -478,16 +498,6 @@ const SettingTemplate = () => {
                 </Button>
               </div>
             ))}
-
-            <Button
-              type="button"
-              variant="outline"
-              onClick={addBusinessHour}
-              className="w-full"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Business Hour
-            </Button>
           </CardContent>
         </Card>
 
@@ -500,6 +510,15 @@ const SettingTemplate = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={addSocial}
+              className="w-full"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Add Social Media Link
+            </Button>
             {watch('socials').map((social, index) => (
               <div key={index} className="flex items-center gap-4">
                 <Input
@@ -511,6 +530,7 @@ const SettingTemplate = () => {
                     setValue('socials', updatedSocials)
                   }}
                   placeholder="Enter social media URL"
+                  className="placeholder:opacity-60"
                 />
                 <Button
                   type="button"
@@ -522,16 +542,6 @@ const SettingTemplate = () => {
                 </Button>
               </div>
             ))}
-
-            <Button
-              type="button"
-              variant="outline"
-              onClick={addSocial}
-              className="w-full"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Social Media Link
-            </Button>
           </CardContent>
         </Card>
 

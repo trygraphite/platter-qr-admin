@@ -374,8 +374,8 @@ export function MenuItemsDialog({
           <div className="flex justify-between mt-4">
             <Button
               onClick={() => setIsAddModalOpen(true)}
-              className="flex items-center text-white"
-              variant="secondary"
+              className="flex items-center bg-primary  hover:bg-primary/90"
+              variant="default"
               size="sm"
             >
               Add Menu Item

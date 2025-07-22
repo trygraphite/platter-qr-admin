@@ -85,7 +85,7 @@ const Login = () => {
                 id="email"
                 type="email"
                 placeholder="Enter your email"
-                className="pl-10"
+                className="pl-10 placeholder:text-gray-500 placeholder:opacity-100"
                 {...register('username')}
               />
             </div>
@@ -102,7 +102,7 @@ const Login = () => {
                 id="password"
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Enter your password"
-                className="pl-10 pr-10"
+                className="pl-10 pr-10 placeholder:text-gray-500 placeholder:opacity-100"
                 {...register('password')}
               />
               <Button
