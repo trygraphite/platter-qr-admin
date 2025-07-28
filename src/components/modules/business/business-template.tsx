@@ -8,6 +8,7 @@ import { useApi } from "@/network";
 import { toast } from "sonner";
 import type { AccountMeBusiness } from "@/types/apiResponse/account.payload";
 import Image from "next/image";
+import BusinessSkeleton from "@/components/skeleton-loader/business-skeleton";
 
 export default function BusinessesPageTemplate() {
   const { accountApi, authApi } = useApi();
@@ -50,12 +51,15 @@ export default function BusinessesPageTemplate() {
     }
   };
 
+  // Show skeleton loading when data is being fetched
+  if (loading) {
+    return <BusinessSkeleton />
+  }
+
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold mb-6">Your Businesses</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : businesses.length === 0 ? (
+      {businesses.length === 0 ? (
         <p>No businesses found.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

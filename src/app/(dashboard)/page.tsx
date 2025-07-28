@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAccountDetails, useActiveBusiness } from '@/hooks/useAccount';
+import DashboardLayout from '@/components/modules/dashboard/dashboard-layout';
 
 const Dashboard = () => {
   const router = useRouter();
@@ -32,7 +33,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className='text-primary-500'>Dashboard</div>
+    <DashboardLayout/>
   );
 }
 

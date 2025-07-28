@@ -14,6 +14,7 @@ import { BusinessTable } from '@/types/apiResponse/business.payload'
 import { generateQRCode, generateTableQRUrl } from '@/utils/qr-code'
 import { QRDisplay } from '@/components/custom/qr-display'
 import { useActiveBusiness } from '@/hooks/useAccount'
+import TableSkeleton from '@/components/skeleton-loader/table-skeleton'
 
 const ManageTable = () => {
   const { businessApi } = useApi()
@@ -48,6 +49,10 @@ const ManageTable = () => {
   const tables = tablesData?.data?.docs || []
   const totalItems = tablesData?.data?.totalItems || 0
 
+  // Show skeleton loading when data is being fetched
+  if (isLoading) {
+    return <TableSkeleton />
+  }
 
   const handleSearch = (value: string) => {
     setSearchTerm(value)

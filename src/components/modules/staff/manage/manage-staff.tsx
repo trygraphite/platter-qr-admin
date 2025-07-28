@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge'
 import { Staff } from '@/types/apiResponse/staff.payload'
 import { useStaffList } from '@/hooks/useStaff'
 import { GetStaffQuery } from '@/types/apiRequest/staff.request'
+import TableSkeleton from '@/components/skeleton-loader/table-skeleton'
 
 const ManageStaff = () => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -31,12 +32,11 @@ const ManageStaff = () => {
   const staff = staffData?.data?.docs || []
   const totalItems = staffData?.data?.totalItems || 0
 
-  // Debug logging
-  console.log('staffData:', staffData)
-  console.log('staff:', staff)
-  console.log('totalItems:', totalItems)
-  console.log('isLoading:', isLoading)
-  console.log('error:', error)
+
+  // Show skeleton loading when data is being fetched
+  if (isLoading) {
+    return <TableSkeleton />
+  }
 
   const handleSearch = (value: string) => {
     setSearchTerm(value)
@@ -138,7 +138,7 @@ const ManageStaff = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="container mx-auto py-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>

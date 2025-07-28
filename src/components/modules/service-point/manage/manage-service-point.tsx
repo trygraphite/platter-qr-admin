@@ -11,6 +11,7 @@ import { ServicePoint } from '@/types/apiResponse/business.payload';
 import { ServicePointRequest } from '@/types/apiRequest/business.request';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
+import TableSkeleton from '@/components/skeleton-loader/table-skeleton';
 
 const columns: TableColumn<ServicePoint>[] = [
   { key: 'name', label: 'Name', sortable: true },
@@ -47,6 +48,11 @@ const ManageServicePoint = () => {
     },
   });
 
+  // Show skeleton loading when data is being fetched
+  if (isLoading) {
+    return <TableSkeleton />
+  }
+
   const handleEdit = (sp: ServicePoint) => {
     setEditing(sp);
     setEditForm({ name: sp.name, description: sp.description });
@@ -60,7 +66,7 @@ const ManageServicePoint = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-8">
+    <div className="container mx-auto py-6">
       <h1 className="text-2xl font-bold mb-4">Manage Service Points</h1>
       <Table<ServicePoint>
         columns={columns as TableColumn<ServicePoint>[]}
