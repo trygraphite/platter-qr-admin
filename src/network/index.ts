@@ -5,6 +5,7 @@ import { businessApi } from "./business"
 import { uploadApi } from "./upload"
 import { menuApi } from "./menu"
 import { staffApi } from "./staff"
+import { ordersApi } from "./orders"
 
 
 export function useApi(){
@@ -16,7 +17,8 @@ export function useApi(){
         businessApi: businessApi(platterApi),
         uploadApi: uploadApi(platterApi),
         menuApi: menuApi(platterApi),
-        staffApi: staffApi(platterApi)
+        staffApi: staffApi(platterApi),
+        ordersApi: ordersApi(platterApi)
         // Add other API services here
     }   
 }

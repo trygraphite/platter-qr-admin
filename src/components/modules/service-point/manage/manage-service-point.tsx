@@ -1,37 +1,47 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query';
-import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Table, TableColumn } from '@/components/custom/table';
-import { useApi } from '@/network';
-import { ServicePoint } from '@/types/apiResponse/business.payload';
-import { ServicePointRequest } from '@/types/apiRequest/business.request';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
-import TableSkeleton from '@/components/skeleton-loader/table-skeleton';
+import React, { useState } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { DataTable, TableColumn } from "@/components/custom/table";
+import { useApi } from "@/network";
+import { ServicePoint } from "@/types/apiResponse/business.payload";
+import { ServicePointRequest } from "@/types/apiRequest/business.request";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import TableSkeleton from "@/components/skeleton-loader/table-skeleton";
 
 const columns: TableColumn<ServicePoint>[] = [
-  { key: 'name', label: 'Name', sortable: true },
-  { key: 'description', label: 'Description', sortable: false },
+  { key: "name", label: "Name", sortable: true },
+  { key: "description", label: "Description", sortable: false },
 ];
 
 const ManageServicePoint = () => {
   const { businessApi } = useApi();
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [editing, setEditing] = useState<ServicePoint | null>(null);
-  const [editForm, setEditForm] = useState<ServicePointRequest>({ name: '', description: '' });
-
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: ['service-points', page, pageSize, search],
-    queryFn: () => businessApi.getAllServicePoints({ page, limit: pageSize, search }),
+  const [editForm, setEditForm] = useState<ServicePointRequest>({
+    name: "",
+    description: "",
   });
 
-  console.log('service point data', data);
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ["service-points", page, pageSize, search],
+    queryFn: () =>
+      businessApi.getAllServicePoints({ page, limit: pageSize, search }),
+  });
+
+  console.log("service point data", data);
 
   const servicePoints = data?.data?.data?.docs || [];
 
@@ -39,18 +49,18 @@ const ManageServicePoint = () => {
     mutationFn: (payload: { id: string; data: ServicePointRequest }) =>
       businessApi.updateServicePoint(payload.id, payload.data),
     onSuccess: () => {
-      toast.success('Service point updated!');
+      toast.success("Service point updated!");
       setEditing(null);
       refetch();
     },
     onError: () => {
-      toast.error('Failed to update service point');
+      toast.error("Failed to update service point");
     },
   });
 
   // Show skeleton loading when data is being fetched
   if (isLoading) {
-    return <TableSkeleton />
+    return <TableSkeleton />;
   }
 
   const handleEdit = (sp: ServicePoint) => {
@@ -68,7 +78,7 @@ const ManageServicePoint = () => {
   return (
     <div className="container mx-auto py-6">
       <h1 className="text-2xl font-bold mb-4">Manage Service Points</h1>
-      <Table<ServicePoint>
+      <DataTable<ServicePoint>
         columns={columns as TableColumn<ServicePoint>[]}
         data={servicePoints as unknown as ServicePoint[]}
         loading={isLoading}
@@ -96,7 +106,9 @@ const ManageServicePoint = () => {
               <Input
                 id="edit-name"
                 value={editForm.name}
-                onChange={e => setEditForm(f => ({ ...f, name: e.target.value }))}
+                onChange={(e) =>
+                  setEditForm((f) => ({ ...f, name: e.target.value }))
+                }
                 required
               />
             </div>
@@ -105,15 +117,21 @@ const ManageServicePoint = () => {
               <Input
                 id="edit-description"
                 value={editForm.description}
-                onChange={e => setEditForm(f => ({ ...f, description: e.target.value }))}
+                onChange={(e) =>
+                  setEditForm((f) => ({ ...f, description: e.target.value }))
+                }
                 required
               />
             </div>
             <DialogFooter>
               <Button type="submit" disabled={updateMutation.isPending}>
-                {updateMutation.isPending ? 'Saving...' : 'Save Changes'}
+                {updateMutation.isPending ? "Saving..." : "Save Changes"}
               </Button>
-              <Button type="button" variant="outline" onClick={() => setEditing(null)}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setEditing(null)}
+              >
                 Cancel
               </Button>
             </DialogFooter>
