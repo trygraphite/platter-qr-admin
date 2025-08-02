@@ -170,13 +170,6 @@ const CreateTable = () => {
                 restaurantName={primaryBusiness?.name || "The Sauce"}
               />
             )}
-            {/* Debug info */}
-            {qrCodeUrl && createdTable && (
-              <div className="text-xs text-muted-foreground mt-2">
-                Debug: tableName={createdTable.name}, restaurantName=
-                {primaryBusiness?.name || "The Sauce"}
-              </div>
-            )}
           </div>
         </DialogContent>
       </Dialog>

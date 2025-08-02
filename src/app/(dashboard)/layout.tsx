@@ -10,12 +10,12 @@ export default function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full bg-muted">
+      <div className="flex min-h-screen w-full">
         <AppSidebar />
         <main className="flex-1 flex flex-col items-center justify-start overflow-auto px-4 py-8 md:px-8 lg:px-12">
           <div className="w-full">
             <DynamicBreadcrumb />
-            <div className="mt-6 rounded-xl shadow-md p-6 md:p-10">
+            <div className="">
               {children}
             </div>
           </div>

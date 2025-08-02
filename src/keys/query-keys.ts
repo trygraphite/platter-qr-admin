@@ -42,6 +42,9 @@ export const QUERY_KEYS = {
     CREATE_STAFF: 'CREATE_STAFF',
     GET_ALL_STAFF: 'GET_ALL_STAFF',
 
+    // Orders
+    GET_ALL_ORDERS: 'GET_ALL_ORDERS',
+
     // Legacy keys
     GET_USER: 'GET_USER',
 

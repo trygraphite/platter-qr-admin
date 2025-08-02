@@ -7,6 +7,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { useApi } from "@/network";
 import { toast } from "sonner";
 import type { AccountMeBusiness } from "@/types/apiResponse/account.payload";
+import Image from "next/image";
+import BusinessSkeleton from "@/components/skeleton-loader/business-skeleton";
 
 export default function BusinessesPageTemplate() {
   const { accountApi, authApi } = useApi();
@@ -49,12 +51,15 @@ export default function BusinessesPageTemplate() {
     }
   };
 
+  // Show skeleton loading when data is being fetched
+  if (loading) {
+    return <BusinessSkeleton />
+  }
+
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold mb-6">Your Businesses</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : businesses.length === 0 ? (
+      {businesses.length === 0 ? (
         <p>No businesses found.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -64,10 +69,12 @@ export default function BusinessesPageTemplate() {
               className="border rounded-lg p-6 flex flex-col items-center cursor-pointer hover:shadow-lg transition"
               onClick={() => handleBusinessClick(business)}
             >
-              <img
+              <Image
                 src={business.logo || business.image || "/vercel.svg"}
                 alt={business.name}
-                className="w-20 h-20 object-cover rounded-full mb-4"
+                className=" object-cover rounded-full mb-4"
+                width={60}
+                height={60}
               />
               <h2 className="text-xl font-semibold mb-2">{business.name}</h2>
               {business.isPrimary && (
